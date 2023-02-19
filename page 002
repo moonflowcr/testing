@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+<!-- PAGE 001, by codesbyana
+
+	CREDITS:
+		- google fonts 
+		- phosphoricons by helena zhang and toby fried (https://phosphoricons.com/)
+		- tippy.js by atomiks
+		- isotope combination filtering by magnusthemes
+		- masonry by desandro
+
+	TERMS OF USE: 
+		- DO NOT DELETE, MOVE OR EDIT THE CREDIT
+		- DO NOT USE AS A BASE CODE. FEEL FREE TO MAKE MINOR CUSTOMIZATIONS BUT DO NOT EDIT PAST THE POINT OF RECOGNITION OR REPOST IT AS YOUR OWN
+		- DO NOT STEAL PARTS FROM THIS CODE
+	
+	Thank you for using! ♡
+
+ -->
+ 
+<html>
+<head> 
+
+	<title> characters page </title>
+	<link rel="shortcut icon" href="{Favicon}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SCRIPTS -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<!-- isotope filters -->
+<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+<script src="https://static.tumblr.com/p0knose/FpAp5c11c/magnusthemes.combofilters.js"></script>
+
+<!-- masonry layout -->
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script src="/path/to/masonry.pkgd.min.js"></script>
+
+<!---- TOOLTIPS ---->
+
+<script src="https://unpkg.com/popper.js@1"></script>
+<script src="https://unpkg.com/tippy.js@5/dist/tippy-bundle.iife.js"></script>
+
+<!-- FONTS: GOOGLE FONTS AND ICON FONTS -->
+
+<script src="https://unpkg.com/phosphor-icons"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+	
+<style type="text/css">
+
+/*----- BASICS -----*/
+
+* { 
+    margin: 0 ; 
+	padding: 0 ; 
+	box-sizing: border-box; 
+}
+
+:root {
+    /* FONTS */
+    --FontSize: 15px;
+    --MuseIconSize: 20px;
+    --FontBody: 'Jost', sans-serif;
+    --FontAccent: 'Jost', cursive;
+    
+    /* COLORS */
+    --ColorText: #eeeeee;
+    --ColorBackground: #111111; /* main bg */
+    --ColorBackground2: #202020; /* header + muse boxes bg */
+    --ColorBackground2RGB: rgb(32,32,32,.9); /* overlay bg. use this website to convert hex to rgb: https://www.webfx.com/web-design/hex-to-rgb/ */
+    --ColorBorder: #505050;
+    --ColorLinks: #fff;
+    --ColorLinksHover: #f2cfd7;
+    --ColorMuseLinks: #f2cfd7;
+    --ColorMuseLinksHover: #f6a2b5;
+    --ColorAccent1: #f6a2b5;
+    
+    --ColorGradient1: #f6a2b5;
+    --ColorGradient2: #c56491; /* if you want a solid color instead of a gradient, use same colors in both variables */
+    --Glow: 0 0 10px; /* change last value to 0 if you don't want the glow */
+    
+    /* SIZES */
+ 	--MuseImgWidth: 200px; 
+ 	--MuseImgHeight: 200px; 
+    
+    /* OTHERS */
+ 	--BorderRadius: 5px;   
+}
+
+body {
+	background: var(--ColorBackground);
+	color: var(--ColorText);
+	font-size: var(--FontSize);
+	font-family: var(--FontBody);	
+}
+
+a {
+	color: var(--ColorLinks);
+	-webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+a:hover {
+    text-decoration:none;
+	color: var(--ColorLinksHover);
+}
+
+/*----- TUMBLR CONTROLS -----*/
+
+.iframe-controls--desktop {
+    display:none;
+}
+
+
+/*----- TOOLTIPS -----*/
+
+.tippy-tooltip.custom-theme {
+    background-color: var(--ColorBackground);
+    color: var(--ColorText);
+    border: 1px solid var(--ColorBorder);
+    text-align: center;
+    padding:2px;
+    text-transform: uppercase;
+    letter-spacing:.1em;
+    font-size: 0.9em;
+    border-radius: var(--BorderRadius);
+    margin: 5px 0;
+}
+
+/*----- SCROLLBAR -----*/
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+	border-radius: var(--BorderRadius);
+}
+
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(to bottom, var(--ColorGradient1) 0%, var(--ColorGradient2) 100%);
+	border-radius: var(--BorderRadius);
+}
+
+/* for firefox */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--ColorAccent1) transparent;
+}
+
+/*----- SELECTION -----*/
+
+::selection {
+  color: var(--ColorBackground);
+  background: var(--ColorAccent1);
+}
+
+::-moz-selection {
+  color: var(--ColorBackground);
+  background: var(--ColorAccent1);
+}
+
+/*----- LAYOUT -----*/
+
+header {
+    width: 100%;
+    background: var(--ColorBackground2);
+}
+
+.top-bar {
+	display: flex;
+	align-items: center;
+    width:100%;
+	padding:20px 30px;
+	background: linear-gradient(to bottom, var(--ColorGradient1) 0%, var(--ColorGradient2) 100%);
+}
+
+#container { margin:0 auto; width:90%; }
+
+.grid {
+	margin:50px auto 0px;
+	text-align:center;
+}
+
+/*----- NAVBAR -----*/
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: var(--FontAccent);	
+	font-size: 1.7em;
+	line-height: 1em;
+	font-weight: 400;
+	margin-right:50px;
+	text-transform: uppercase;
+	letter-spacing:1.5px;
+	text-shadow:var(--Glow);
+	width:49%;
+}
+
+.title i {
+	margin-right:10px;
+	font-size: 1em;
+	align-items: center;
+}
+
+#nav {
+	display:flex;
+	justify-content: flex-end!important;
+	gap: 10px;
+	width:49%;
+}	
+
+.nav-link i {
+	text-decoration: none;
+	font-size: 1.7em;
+	padding:5px;
+}
+
+.nav-link a {
+    display:flex;
+	justify-content: center;
+  	align-items: center;
+	color: var(--ColorLinks);
+	text-decoration: none;
+  	text-shadow:var(--Glow);
+}
+
+.nav-link a:hover {
+	color: var(--ColorLinksHover);
+}
+
+/*----- FILTERS -----*/
+
+.filters {
+	margin: 0px auto;
+    display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	padding: 10px 20px;
+	list-style:none; 
+    border-bottom: 1px solid var(--ColorBorder);
+}
+
+.filters ul {
+	display: inline-block;
+	margin-right: 40px;
+}
+
+.filters ul:last-of-type {
+	margin-right: 0px;
+}
+
+.filters li {
+    text-align: center;
+    list-style:none;
+    white-space: nowrap;
+    display: inline;
+    margin-left: 7px;
+}
+
+.filters li a {
+    display:inline-block; 
+    font-style:normal; 
+    text-decoration:none;
+    color: var(--ColorText);
+}
+
+.filters li a:hover {
+    color: var(--ColorLinksHover);
+}
+
+.filters li a.selected { 
+	margin-left: none;
+	opacity:1;
+	color: var(--ColorAccent1);
+}
+
+.filters b { 
+    font-family: var(--FontBody);	
+    text-transform:lowercase; 
+    letter-spacing:1px;
+    display: inline-block;
+    margin-right: 10px;
+    font-weight:700;
+}
+
+/*----- MUSES BOXES -----*/
+
+.grid-item { 
+   	border-radius: var(--BorderRadius);
+   	background: var(--ColorBackground2);
+   	color: var(--ColorText);
+   	border: 1px solid var(--ColorBorder);
+   	width: var(--MuseImgWidth);
+   	margin-bottom:50px;
+}
+
+.muse-img {
+	border-radius: var(--BorderRadius);
+	width: 100%;
+	height: var(--MuseImgHeight);
+}
+
+.muse-img img {
+    border-radius: var(--BorderRadius) var(--BorderRadius) 0 0;
+	width: 100%;
+	height: var(--MuseImgHeight);
+}
+
+.grid-item .overlay {
+  position: absolute;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: var(--MuseImgHeight);
+  opacity: 0;
+  z-index:9999999;
+  transition: .5s ease;
+  background-color: var(--ColorBackground2RGB);
+  border-radius: var(--BorderRadius) var(--BorderRadius) 0 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.grid-item:hover .overlay {
+  opacity: 1;
+}
+
+.muse-desc {
+	padding: 10px;
+	text-transform:lowercase;
+	max-height:130px;
+	overflow-x:auto;
+}
+
+.muse-desc a {
+	text-decoration:none;
+}
+
+.muse-info {
+	padding: 5px 10px;
+	border-radius: 0 0 var(--BorderRadius) var(--BorderRadius);
+	border-top: 1px solid var(--ColorBorder);
+}
+
+.muse-name {
+    font-family: var(--FontAccent);	
+	color: var(--ColorAccent1);
+	font-size: 1.45em;
+	line-height:1em;
+	text-transform: lowercase;
+	letter-spacing: 1px;
+	margin-top:7px;
+	word-wrap: break-word;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+}
+
+.muse-sub {
+	font-size: 0.9em;
+	font-weight: 300;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+	margin-top: -5px;
+	margin-bottom:5px;
+	padding: 5px 0;
+}
+
+.muse-links {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.muse-links i {
+	text-decoration: none;
+	padding: 7px;
+}
+
+.muse-links a {
+	color: var(--ColorMuseLinks);
+	text-decoration: none;
+	justify-content: center;
+  	align-items: center;
+  	font-size: var(--MuseIconSize);
+  	text-shadow:var(--Glow);
+}
+
+.muse-links a:hover {
+	color: var(--ColorMuseLinksHover);
+}
+
+/*-----  CREDIT + SCROLL TO TOP -----*/
+
+#totop, #cred {
+	position: fixed;
+	text-decoration: none;
+	z-index: 9999999;
+}
+
+#totop {
+	bottom: 60px;
+	right: 15px;
+}
+
+#cred {
+	bottom: 15px;
+	right: 15px;
+}
+
+#totop i, #cred i {
+	text-decoration: none;
+	font-size: 1.6em;
+	margin-top:5px;
+	padding: 6px;
+	background: linear-gradient(to bottom, var(--ColorGradient1) 0%, var(--ColorGradient2) 100%);
+	border-radius: var(--BorderRadius);
+}
+
+#totop, #cred {
+	color: var(--ColorLinks);
+	text-decoration: none;
+	justify-content: center;
+  	align-items: center;
+  	text-shadow:var(--Glow);
+}
+
+#totop:hover, #cred:hover {
+	color: var(--ColorLinksHover)!important;
+}
+
+/*----- RESPONSIVENESS -----*/
+
+@media only screen and (max-width: 479px) {
+
+.title { display:none;}
+
+#nav { margin-right:none; width:100%; justify-content: center!important;}
+
+.filters {
+    display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	padding: none;
+	list-style:none; 
+    border-bottom: 1px solid var(--ColorBorder);
+}
+
+.filters ul {
+    width:100%;
+    text-align:left;
+	display: inline;
+	margin-left: none!important;
+	margin-right: none!important;
+}
+
+.filters li {
+    margin-left: none;
+    text-align: center;
+}
+
+}
+
+
+</style>	
+	
+</head>
+	
+<body>
+
+<!-- HEADER -->
+
+<header>	
+    
+    <div class="top-bar">
+	
+	<div class="title"> <i class="ph-fire"></i> characters </div>
+
+<!-- // NAVIGATION -->
+
+<div id="nav">
+  	<div class="nav-link"><a href="/" title="home"><i class="ph-house"></i></a></div>
+	<div class="nav-link"><a href="/ask" title="message"><i class="ph-chat-circle"></i></a></div>
+	<div class="nav-link"><a href="#" title="link"><i class="ph-sun"></i></a></div>
+	<div class="nav-link"><a href="#" title="link"><i class="ph-moon"></i></a></div>
+	<div class="nav-link"><a href="#" title="link"><i class="ph-star"></i></a></div>
+	
+</div>	
+
+</div>
+
+<!-- // NAVIGATION -->
+
+<!-- FILTERS -->
+
+<div class="filters">
+
+	
+	<ul class="filter option-set exclusive" data-filter-group="group one">
+	<b>group one</b>
+     	<li><a href="#" data-filter-value="" class="selected">all</a></li>
+     	<li><a href="#" data-filter-value=".1a">filter one</a></li>
+     	<li><a href="#" data-filter-value=".1b">filter two</a></li>
+   	</ul>
+
+   	
+	<ul class="filter option-set exclusive" data-filter-group="group two">
+	<b>group two</b>
+     	<li><a href="#" data-filter-value="" class="selected">all</a></li>
+     	<li><a href="#" data-filter-value=".2a">filter one</a></li>
+     	<li><a href="#" data-filter-value=".2b">filter two</a></li>
+     	<li><a href="#" data-filter-value=".2c">filter three</a></li>
+   	</ul>
+   	
+   	<ul class="filter option-set exclusive" data-filter-group="group three">
+	<b>group three</b>
+     	<li><a href="#" data-filter-value="" class="selected">all</a></li>
+     	<li><a href="#" data-filter-value=".3a">filter one</a></li>
+     	<li><a href="#" data-filter-value=".3b">filter two</a></li>
+     	<li><a href="#" data-filter-value=".3c">filter three</a></li>
+     	<li><a href="#" data-filter-value=".3d">filter four</a></li>
+   	</ul>
+
+</div>
+
+<!-- // FILTERS -->
+
+</header>
+
+<!-- // HEADER -->
+
+<div id="container">
+
+<!-- MUSES -->
+
+<div class="grid">
+
+    <!-- muse -->
+
+	<div class="grid-item 1a 2a">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info. just keep it short so it looks right, five lines tops.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 1a 2b 3a">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info. just keep it short so it looks right. it'll scroll if you use more than five lines to add your characters information, just like this.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 2a 2b">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    feel free to use as many links as you need! 3-5 links looks best, but go nuts! <b>Lorem ipsum dolor sit amet</b>, <i>consectetur adipiscing elit</i>.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 1b 2c 3d">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 1a 2c 3b">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 1b 2a 3c">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 1b 2a 3a">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	<!-- muse -->
+
+	<div class="grid-item 1b 2b 3b">
+
+	<div class="muse-img"><img src="https://i.imgur.com/KPwwA0e.png" /></div>
+	<div class="overlay">
+        <div class="muse-desc"> 
+		    gender. pronouns. sexuality. occupation. any extra important info.
+		</div>
+		
+		<div class="muse-links">
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+			<a href="#" title="link"><i class="ph-hash"></i></a>
+		</div>
+		
+    </div>
+	
+	<div class="muse-info">
+		<div class="muse-name"> character name </div>
+		<div class="muse-sub"> faceclaim </div>
+		
+	</div>
+
+	</div>
+	
+	<!-- / muse -->
+	
+	
+					
+				
+<!-- END OF MUSES. DO NOT EDIT BELOW THIS LINE -->
+
+</div>
+
+<!-- // MUSES -->
+
+</div>
+
+<a onclick="topFunction()" id="totop" title="back to top"><i class="ph-arrow-up"></i></a>
+
+<!-- CREDIT. DO NOT EDIT -->
+
+<a id="cred" href="#" title="codesbyana"><i class="ph-moon-stars"></i></a>
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+// tooltips
+
+tippy('[title]', {
+    theme: 'custom',
+    arrow: false,
+    followCursor: true,
+    delay: 100,
+    placement: 'top',
+    zIndex: 9999999999,
+    maxWidth: 400,
+ 
+    content(reference) {
+      const title = reference.getAttribute('title');
+      reference.removeAttribute('title');
+      return title;
+    },
+ });
+
+// isotope filtering
+
+$(document).ready(function() {
+ var $container = $(".grid"); 
+ var filters = {};
+ var $grid = $container.isotope({
+   itemSelector: ".grid-item", // the elements to filter
+    masonry: {
+    gutter: 50,
+    horizontalOrder: true,
+    fitWidth: true,
+    percentPosition: false
+   }
+ });
+ $(".option-set a").click(function(e) {
+   var $this = $(this);
+   var filterAttr = "data-filter-value";
+   var filterValue = $this.attr(filterAttr); 
+   var $optionSet = $this.parents(".option-set"); 
+   var group = $optionSet.attr("data-filter-group"); 
+   var filterGroup = filters[group];
+   if (!filterGroup) {
+     filterGroup = filters[group] = [];
+   }
+   var $selectAll = $optionSet.find('a['+filterAttr+'=""]'); // the 'select all' button in the current group
+   var activeClass = "selected", // the class for active links
+     exclClass = "exclusive"; // the class for exclusive groups
+ comboFiltering($this,filters,filterAttr,filterValue,$optionSet,group,$selectAll,activeClass,exclClass);
+   var comboFilter = getComboFilter(filters);
+   $grid.isotope({
+     filter: comboFilter
+   });
+   $this.toggleClass(activeClass);
+   e.preventDefault();
+ });
+});
+
+// scroll to top
+
+$(document).ready(function(){
+    $('#totop a').click(function(){
+        $('html, body').animate({scrollTop : 0},800);
+        return false;
+    });
+});
+ 
+</script>
+
+<!-- // JAVASCRIPT -->
+
+</body>
+
+</html>
