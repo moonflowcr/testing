@@ -181,7 +181,7 @@ b {
 }
 
 body.controls-click .tmblr-iframe {
-   opacity: 1.0;
+   opacity: 1;
    visibility: visible;
    -webkit-transition: all 0.5s;
    -moz-transition: all 0.5s;
@@ -664,7 +664,7 @@ body { padding-top: 0 !important; }
 	<div class="nav-link"><a href="https://www.pinterest.es/moonflowcr/_saved/" title="pinterest"><i class="ph-pinterest-logo"></i></a></div>
 	<div class="nav-link" id="menubutton" onclick="openNav()" title="menu"><i class="ph-dots-three-bold"></i></a></div>
 	
-	<div class="nav-link"><a id=“controlsbutton” title="tumblr controls"><i class="ph-gear"></i></a></div>
+	<div class="nav-link"><a id="controlsbutton" title="tumblr controls"><i class="ph-gear"></i></a></div>
 	
 </div>	
 
